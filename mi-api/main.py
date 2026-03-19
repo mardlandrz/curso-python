@@ -39,3 +39,12 @@ def eliminar_producto(id: int):
     if not eliminado:
         return {"error": "Producto no encontrado"}
     return {"mensaje": "Producto eliminado", "producto": eliminado}
+
+    # PUT /productos/1 — editar un producto existente
+@app.put("/productos/{id}")
+def actualizar_producto(id: int, producto: Producto):
+    existente = database.obtener_uno(id)
+    if not existente:
+        return {"error": "Producto no encontrado"}
+    actualizado = database.actualizar(id, producto.nombre, producto.precio, producto.categoria)
+    return {"mensaje": "Producto actualizado", "producto": actualizado}

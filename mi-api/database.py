@@ -59,3 +59,13 @@ def eliminar(id: int):
     conn.commit()
     conn.close()
     return producto
+
+def actualizar(id: int, nombre: str, precio: float, categoria: str):
+    conn = conectar()
+    conn.execute(
+        "UPDATE productos SET nombre = ?, precio = ?, categoria = ? WHERE id = ?",
+        (nombre, precio, categoria, id)
+    )
+    conn.commit()
+    conn.close()
+    return obtener_uno(id)
