@@ -1,7 +1,7 @@
 # seguridad.py
 from passlib.context import CryptContext
 from jose import JWTError, jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 # Configuración — en producción estos valores van en variables de entorno
 SECRET_KEY = "mi-clave-secreta-super-segura-2024"
@@ -20,9 +20,8 @@ def verificar_password(password: str, password_encriptado: str) -> bool:
     return pwd_context.verify(password, password_encriptado)
 
 def crear_token(datos: dict) -> str:
-    # Crea un token JWT con expiración
     datos_token = datos.copy()
-    expiracion = datetime.utcnow() + timedelta(minutes=MINUTOS_EXPIRACION)
+    expiracion = datetime.now(timezone.utc) + timedelta(minutes=MINUTOS_EXPIRACION)  # ← esta línea
     datos_token.update({"exp": expiracion})
     return jwt.encode(datos_token, SECRET_KEY, algorithm=ALGORITMO)
 

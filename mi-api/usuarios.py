@@ -1,44 +1,42 @@
 # usuarios.py
-import sqlite3
+from sqlalchemy import create_engine, text
 import seguridad
 
-DB = "usuarios.db"
-
-def conectar():
-    return sqlite3.connect(DB)
+DATABASE_URL = "postgresql://postgres:daniel123@localhost:5432/miapi"
+engine = create_engine(DATABASE_URL)
 
 def crear_tabla():
-    conn = conectar()
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS usuarios (
-            id       INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre   TEXT    NOT NULL,
-            email    TEXT    UNIQUE NOT NULL,
-            password TEXT    NOT NULL
-        )
-    """)
-    conn.commit()
-    conn.close()
+    with engine.connect() as conn:
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS usuarios (
+                id       SERIAL PRIMARY KEY,
+                nombre   TEXT   NOT NULL,
+                email    TEXT   UNIQUE NOT NULL,
+                password TEXT   NOT NULL
+            )
+        """))
+        conn.commit()
 
 def crear_usuario(nombre: str, email: str, password: str):
     try:
-        conn = conectar()
         password_encriptado = seguridad.encriptar_password(password)
-        conn.execute(
-            "INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)",
-            (nombre, email, password_encriptado)
-        )
-        conn.commit()
-        conn.close()
+        with engine.connect() as conn:
+            conn.execute(
+                text("INSERT INTO usuarios (nombre, email, password) VALUES (:nombre, :email, :password)"),
+                {"nombre": nombre, "email": email, "password": password_encriptado}
+            )
+            conn.commit()
         return {"mensaje": f"Usuario {nombre} creado exitosamente"}
-    except sqlite3.IntegrityError:
-        return None  # email ya existe
+    except Exception:
+        return None
 
 def obtener_por_email(email: str):
-    conn = conectar()
-    cursor = conn.execute("SELECT * FROM usuarios WHERE email = ?", (email,))
-    fila = cursor.fetchone()
-    conn.close()
-    if fila:
-        return {"id": fila[0], "nombre": fila[1], "email": fila[2], "password": fila[3]}
-    return None
+    with engine.connect() as conn:
+        resultado = conn.execute(
+            text("SELECT * FROM usuarios WHERE email = :email"),
+            {"email": email}
+        )
+        fila = resultado.fetchone()
+        if fila:
+            return {"id": fila[0], "nombre": fila[1], "email": fila[2], "password": fila[3]}
+        return None
