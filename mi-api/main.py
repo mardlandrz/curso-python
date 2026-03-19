@@ -1,19 +1,28 @@
-# main.py
+# main.py — agrega estas líneas nuevas al inicio
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
-import database
+import database_pg as database 
 import usuarios
 import seguridad
 
 app = FastAPI()
 
+# Sirve los archivos estáticos
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 # Crea las tablas al iniciar
 database.crear_tabla()
 usuarios.crear_tabla()
 
-# Define dónde está el endpoint de login
 oauth2 = OAuth2PasswordBearer(tokenUrl="login")
+
+# Ruta principal — sirve el HTML
+@app.get("/app")
+def frontend():
+    return FileResponse("static/index.html")
 
 # ── MODELOS ───────────────────────────────────────────────
 class Producto(BaseModel):

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi API con Python</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- LOGIN -->
+    <div id="pantalla-login">
+        <div class="card">
+            <h1>Iniciar sesión</h1>
+            <input type="email"    id="email"    placeholder="Email">
+            <input type="password" id="password" placeholder="Contraseña">
+            <button onclick="login()">Entrar</button>
+            <p id="error-login" class="error"></p>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="pantalla-dashboard" class="oculto">
+        <div class="header">
+            <h2>Mis Productos</h2>
+            <button onclick="cerrarSesion()" class="btn-rojo">Cerrar sesión</button>
+        </div>
+
+        <!-- Formulario agregar -->
+        <div class="card">
+            <h3>Agregar producto</h3>
+            <input type="text"   id="nuevo-nombre"    placeholder="Nombre">
+            <input type="number" id="nuevo-precio"    placeholder="Precio">
+            <input type="text"   id="nuevo-categoria" placeholder="Categoría">
+            <button onclick="crearProducto()">Agregar</button>
+        </div>
+
+        <!-- Lista de productos -->
+        <div id="lista-productos"></div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

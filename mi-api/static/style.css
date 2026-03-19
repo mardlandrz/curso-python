@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f0f2f5;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 16px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1, h2, h3 {
+    margin-bottom: 16px;
+    color: #333;
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+button {
+    background: #4f46e5;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100%;
+}
+
+button:hover {
+    background: #4338ca;
+}
+
+.btn-rojo {
+    background: #ef4444;
+    width: auto;
+}
+
+.btn-rojo:hover {
+    background: #dc2626;
+}
+
+.btn-pequeño {
+    width: auto;
+    padding: 6px 12px;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.error {
+    color: #ef4444;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.oculto {
+    display: none;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 500px;
+    margin: 0 auto 16px;
+}
+
+.producto-card {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.producto-info p {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.producto-acciones {
+    display: flex;
+    gap: 8px;
+}
