@@ -1,9 +1,11 @@
 # database_pg.py
+import os
 from sqlalchemy import create_engine, text
 
 # Conexión a PostgreSQL
-# formato: postgresql://usuario:contraseña@host:puerto/nombre_db
-DATABASE_URL = "postgresql://postgres:daniel123@localhost:5432/miapi"
+# Lee DATABASE_URL del entorno (configurada en Railway).
+# Si no está definida, usa la conexión local como fallback para desarrollo.
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:daniel123@localhost:5432/miapi")
 
 engine = create_engine(DATABASE_URL)
 
