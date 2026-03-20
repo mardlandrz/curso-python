@@ -1,8 +1,9 @@
 # usuarios.py
 from sqlalchemy import create_engine, text
 import seguridad
+import os
 
-DATABASE_URL = "postgresql://postgres:daniel123@localhost:5432/miapi"
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:daniel123@localhost:5432/miapi")
 engine = create_engine(DATABASE_URL)
 
 def crear_tabla():
