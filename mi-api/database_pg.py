@@ -1,5 +1,6 @@
 # database_pg.py
 import os
+from sqlalchemy import create_engine, text
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:daniel123@localhost:5432/miapi")
 
 engine = create_engine(DATABASE_URL)
